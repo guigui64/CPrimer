@@ -2,6 +2,9 @@
 ###    Specific ignored files    ###
 ####################################
 .idea
+.atom*
+.gdbinit
+tags
 
 ####################################
 ### C++ Github gitignore example ###
