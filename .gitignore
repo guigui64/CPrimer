@@ -5,6 +5,7 @@
 .atom*
 .gdbinit
 tags
+main
 
 ####################################
 ### C++ Github gitignore example ###
