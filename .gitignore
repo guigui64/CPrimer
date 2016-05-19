@@ -4,7 +4,7 @@
 .idea
 .atom*
 .gdbinit
-tags
+.tags*
 main
 
 ####################################
