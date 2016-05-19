@@ -1,6 +1,6 @@
 #include <iostream>
-#include "Screen.h"
-#include "Window_mgr.h"
+#include "Screen.hpp"
+#include "Window_mgr.hpp"
 
 using namespace std;
 
