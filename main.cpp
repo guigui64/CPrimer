@@ -5,12 +5,12 @@
 using namespace std;
 
 int main() {
-    Window_mgr manager;
-    Screen firstScreen = manager.getScreen(0);
+  Window_mgr manager;
+  Screen firstScreen = manager.getScreen(0);
 
-    firstScreen.move(4,0).set('#');
+  firstScreen.move(4,0).set('#');
 
-    cout << firstScreen.get() << endl;
+  cout << firstScreen.get() << endl;
 
-    return 0;
+  return 0;
 }
