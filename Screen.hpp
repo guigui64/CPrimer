@@ -8,6 +8,8 @@
 #include <iostream>
 
 class Screen {
+  // Window_mgr members can access the private members of class Screen
+  friend class Window_mgr;
 public:
   typedef std::string::size_type pos;
   Screen() = default;   // needed because Screen has another constructor
@@ -26,18 +28,12 @@ public:
   // the first one is not const so that it can return a non const object
   // and allow to do screen.display().set('#') for instance
   // but it cannot be called on a const Screen
-  Screen &display(std::ostream &os) {
-    do_display(os); return *this;
-  }
+  Screen &display(std::ostream &os) { do_display(os); return *this; }
   // the second one is const and will be called for a const Screen
-  const Screen &display(std::ostream &os) const {
-    do_display(os); return *this;
-  }
+  const Screen &display(std::ostream &os) const { do_display(os); return *this; }
 private:
   // function to do the work of displaying a Screen
-  void do_display(std::ostream &os) const {
-    os << contents;
-  }
+  void do_display(std::ostream &os) const { os << contents; }
   mutable size_t access_ctr;   // may change even in a const object
   pos cursor = 0;
   pos height = 0, width = 0;
