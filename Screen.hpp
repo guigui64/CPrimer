@@ -7,14 +7,14 @@
 
 #include <iostream>
 
-class Screen {
+class Screen
+{
   // Window_mgr members can access the private members of class Screen
   friend class Window_mgr;
 public:
   typedef std::string::size_type pos;
   Screen() = default;   // needed because Screen has another constructor
-  Screen(pos ht, pos wd, char c) : height(ht), width(wd), contents(ht * wd, c) {
-  }
+  Screen(pos ht, pos wd, char c) : height(ht), width(wd), contents(ht * wd, c) {}
   char get() const   // here, 'const' means that the content of Screen cannot be changed
                      // (except for mutable members)
   {
