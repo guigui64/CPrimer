@@ -23,6 +23,16 @@ public:
   double d;
 };
 
+struct AggregateClass {
+  // A class is an aggregate if
+  // - All of its data members are public
+  // - It does not define any constructors
+  // - It has no in-class initializers
+  // - It has no base classes or virtual functions, which are class-related features
+  int ival;
+  string s;
+};
+
 int main()
 {
   Window_mgr manager;
@@ -38,6 +48,8 @@ int main()
   std::cout << dpc.name << std::endl;
   dpc = DefaultParameterConstructorClass("newName");
   std::cout << dpc.name << std::endl;
+
+  AggregateClass ac = {0, "Anna"}; // The order is important !
 
   return 0;
 }
