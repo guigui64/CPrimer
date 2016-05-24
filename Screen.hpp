@@ -31,6 +31,7 @@ public:
   Screen &display(std::ostream &os) { do_display(os); return *this; }
   // the second one is const and will be called for a const Screen
   const Screen &display(std::ostream &os) const { do_display(os); return *this; }
+  Screen& clear(char = background);
 private:
   // function to do the work of displaying a Screen
   void do_display(std::ostream &os) const { os << contents; }
@@ -38,6 +39,7 @@ private:
   pos cursor = 0;
   pos height = 0, width = 0;
   std::string contents;
+  static const char background;
 };
 
 inline                              // we can specify inline on the definition
@@ -63,6 +65,12 @@ inline Screen &Screen::set(char c)
 inline Screen& Screen::set(pos r, pos col, char ch)
 {
   contents[r*width + col] = ch;   // set specified location to given value
+  return *this;
+}
+
+char const Screen::background = ' ';
+Screen& Screen::clear(char c) {
+  contents = std::string(height * width, c);
   return *this;
 }
 
