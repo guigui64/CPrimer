@@ -1,7 +1,5 @@
 # C++ Primer - Chapters summaries and notes
 
-***
-
 ## Getting started
 
 Example of a program that uses the IO library:
@@ -22,8 +20,6 @@ Example of a program that uses the IO library:
       return 0;
     }
 (ignore this : .*)
-
-***
 
 ## Variables and Basic Types
 
@@ -67,8 +63,6 @@ The language lets us define our own types by defining classes. The library uses 
 class facility to provide a set of higher-level abstractions such as the IO and `string`
 types.
 
-***
-
 ## Strings, Vectors, and Arrays
 
 Among the most important library types are `vector` and `string`. A `string` is a
@@ -82,8 +76,6 @@ Arrays and pointers to array elements provide low-level analogs to the `vector` 
 `string` libraries. In general, the library classes should be used in preference to low-
 level array and pointer alternatives built into the language.
 
-***
-
 ## Functions
 
 Functions are named units of computation and are essential to structuring even
@@ -96,8 +88,6 @@ different functions as long as the number or types of the parameters in the func
 differ. The compiler automatically figures out which function to call based on the
 arguments in a call. The process of selecting the right function from a set of
 overloaded functions is referred to as function matching.
-
-***
 
 ## Classes
 
