@@ -23,7 +23,7 @@ Example of a program that uses the IO library:
 
 ## Variables and Basic Types
 
-### References
+#### References
 
 A **reference** defines an alternative name for an object. A reference type “refers to” another type. We define a reference type by writing a declarator of the form `&d`, where `d` is the name being declared:
 
@@ -31,7 +31,7 @@ A **reference** defines an alternative name for an object. A reference type “r
     int &refVal = ival; // refVal refers to (is another name for) ival
     int &refVal2 = ival // error: a reference must be initialized
 
-### Pointers
+#### Pointers
 
 A **pointer** is a compound type that “points to” another type. Like references, pointers are used for indirect access to other objects. Unlike a reference, a pointer is an object in its own right. Pointers can be assigned and copied; a single pointer can point to several different objects over its lifetime. Unlike a reference, a pointer need not be initialized at the time it is defined. Like other built-in types, pointers defined at block scope have undefined value if they are not initialized.
 
@@ -40,7 +40,7 @@ A **pointer** is a compound type that “points to” another type. Like referen
     cout << *p;     // * yields the object to which p points; prints 42
 (ignore this : .*)
 
-### Summary
+#### Summary
 
 Types are fundamental to all programming in C++.
 
@@ -74,4 +74,97 @@ Classes may also define `mutable` or `static` members. A `mutable` member is a d
 
 ## The IO Library
 
-3 headers : `iostream` for streams, `fstream` for files and `sstream` for `string`s
+C++ uses library classes to handle stream-oriented input and output:
+
+* The `iostream` classes handle IO to console
+* The `fstream` classes handle IO to named files
+* The `stringstream` classes do IO to in-memory `string`s
+
+The `fstream` and `stringstream` classes are related by inheritance to the `iostream` classes. The input classes inherit from `istream` and the output classes from `ostream`. Thus, operations that can be performed on an `istream` object can also be performed on either an `ifstream` or an `istringstream`. Similarly for the output classes, which inherit from `ostream`.
+
+Each IO object maintains a set of condition states that indicate whether IO can be done through this object. If an error is encountered—such as hitting end-of-file on an input stream—then the object’s state will be such that no further input can be done until the error is rectified. The library provides a set of functions to set and test these states.
+
+## Sequential Containers
+
+* `vector` : Flexible-size array. Supports fast random access. Inserting or deleting elements other than at the back may be slow.
+* `deque` : Double-ended queue. Supports fast random access. Fast insert/delete at front and back.
+* `list` : Doubly linked list. Supports only bidirectional sequential access. Fast insert/delete at any point in the list.
+* `forward_list` : Singly linked list. Supports only sequential access in one direction. Fist insert/delete at any point in the list.
+* `array` : Fixed-size array. Supports fast random access. Cannot add or remove elements.
+* `string` : A specialized container, similar to `vector`, that contains characters. Fast random access. Fast insert/delete at the back.
+
+The `begin` and `end` operations yield iterators that refer to the **first** and **one past the last** element in the container.
+
+#### Initializing a Container as a Copy of Another Container
+
+    // each container has three elements, initialized from the given initializers
+    list<string> authors = {"Milton", "Shakespeare", "Austen"};
+    vector<const char*> articles = {"a", "an", "the"};
+    list<string> list2(authors);     // ok: types match
+    deque<string> authList(authors); // error: container types don't match
+    vector<string> words(articles);  // error: element types must match
+    // ok: converts const char* elements to string
+    forward_list<string> words(articles.begin(), articles.end());
+
+#### List initialization
+
+    // each container has three elements, initialized from the given initializers
+    list<string> authors = {"Milton", "Shakespeare", "Austen"};
+    vector<const char*> articles = {"a", "an", "the"};
+
+#### Sequential container size-related constructors
+
+    vector<int> ivec(10, -1);        // ten int elements, each initialized to-1
+    list<string> svec(10, "hi!");    // ten strings; each element is  "hi!"
+    forward_list<int> ivec(10);      // ten elements, each initialized to 0
+    deque<string> svec(10);          // ten elements, each an empty string
+
+#### Library `array`s have fixed size
+
+    array<int, 42>    // type is: array that holds 42 ints
+    array<string, 10> // type is: array that holds 10 strings
+    array<int, 10>::size_type i; // array type includes element type and size
+    array<int>::size_type j;     // error: array<int> is not a type
+
+    array<int, 10> ia1;  // ten default-initialized ints
+    array<int, 10> ia2 = {0,1,2,3,4,5,6,7,8,9};  // list initialization
+    array<int, 10> ia3 = {42};  // ia3[0] is 42, remaining elements are 0
+
+    int digs[10] = {0,1,2,3,4,5,6,7,8,9};
+    int cpy[10] = digs;  // error: no copy or assignment for built-in arrays
+    array<int, 10> digits = {0,1,2,3,4,5,6,7,8,9};
+    array<int, 10> copy = digits;  // ok: so long as array types match
+
+#### Operations
+
+    // read from standard input, putting each word onto the end of container
+    string word;
+    while (cin >> word)
+        container.push_back(word);
+
+    list<int> ilist;
+    // add elements to the start of ilist
+    for (size_t ix = 0; ix != 4; ++ix)
+        ilist.push_front(ix);
+
+    slist.insert(iter, "Hello!"); // insert "Hello!" just before iter
+
+    while (!ilist.empty()) {
+      process(ilist.front()); // do something with the current top of ilist
+      ilist.pop_front();      // done; remove the first element
+    }
+
+    list<int> lst = {0,1,2,3,4,5,6,7,8,9};
+    auto it = lst.begin();
+    while (it != lst.end())
+        if (*it % 2)             // if the element is odd
+            it = lst.erase(it);  // erase this element; it refers to the next element
+        else
+            ++it;
+(ignore this : .*)
+
+#### Accessing elements
+
+* `c.back()`/`c.front` : Returns a reference to the last/first element in c. Undefined if `c` is empty.
+* `c[n]` : Returns a reference to the element indexed by the unsigned integral value `n`. Undefined if  ̀n >= c.size()`.
+* `c.at(n)` : Returns a reference to the element indexed by n. If the index is out of range, throws an `out_of_range` exception.

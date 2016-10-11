@@ -81,5 +81,10 @@ int main()
   std::cout << r << std::endl;
   ac1.calculate();
 
+  std::cout << "-------- IO LIBRARY --------" << std::endl;
+  int ival;
+  std::cin >> ival;
+  std::cout << (cin.fail() ? "FAIL !" : std::to_string(ival)) << std::endl;
+
   return 0;
 }
